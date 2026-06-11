@@ -77,7 +77,7 @@ function evaluateFiveCards(cards: Card[]): HandResult {
       rank: 'Four of a Kind',
       rankValue: 8,
       highCards: [quad, kicker],
-      description: `Four of a Kind, ${rankName(quad)}s`,
+      description: `Four of a Kind, ${rankNamePlural(quad)}`,
     };
   }
 
@@ -86,7 +86,7 @@ function evaluateFiveCards(cards: Card[]): HandResult {
       rank: 'Full House',
       rankValue: 7,
       highCards: [countEntries[0].value, countEntries[1].value],
-      description: `Full House, ${rankName(countEntries[0].value)}s full of ${rankName(countEntries[1].value)}s`,
+      description: `Full House, ${rankNamePlural(countEntries[0].value)} full of ${rankNamePlural(countEntries[1].value)}`,
     };
   }
 
@@ -115,7 +115,7 @@ function evaluateFiveCards(cards: Card[]): HandResult {
       rank: 'Three of a Kind',
       rankValue: 4,
       highCards: [trips, ...kickers],
-      description: `Three of a Kind, ${rankName(trips)}s`,
+      description: `Three of a Kind, ${rankNamePlural(trips)}`,
     };
   }
 
@@ -127,7 +127,7 @@ function evaluateFiveCards(cards: Card[]): HandResult {
       rank: 'Two Pair',
       rankValue: 3,
       highCards: [high, low, kicker],
-      description: `Two Pair, ${rankName(high)}s and ${rankName(low)}s`,
+      description: `Two Pair, ${rankNamePlural(high)} and ${rankNamePlural(low)}`,
     };
   }
 
@@ -138,7 +138,7 @@ function evaluateFiveCards(cards: Card[]): HandResult {
       rank: 'One Pair',
       rankValue: 2,
       highCards: [pair, ...kickers],
-      description: `Pair of ${rankName(pair)}s`,
+      description: `Pair of ${rankNamePlural(pair)}`,
     };
   }
 
@@ -157,6 +157,12 @@ function rankName(value: number): string {
     11: 'Jack', 12: 'Queen', 13: 'King', 14: 'Ace',
   };
   return names[value] || String(value);
+}
+
+function rankNamePlural(value: number): string {
+  const name = rankName(value);
+  if (name === 'Six') return 'Sixes';
+  return name + 's';
 }
 
 export function evaluateHand(holeCards: Card[], communityCards: Card[]): HandResult {

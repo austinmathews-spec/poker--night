@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useGameStore } from '@/store/game-store';
 
 export default function ShowdownOverlay() {
-  const { phase, handResult, dealNewHand, players } = useGameStore();
+  const { phase, handResult, dealNewHand, startNewGame, players } = useGameStore();
 
   const show = (phase === 'showdown' || phase === 'hand-complete') && handResult;
   if (!show || !handResult) return null;
@@ -80,7 +80,7 @@ export default function ShowdownOverlay() {
           )}
 
           <motion.button
-            onClick={dealNewHand}
+            onClick={busted ? () => startNewGame(false) : dealNewHand}
             className="mt-6 px-8 py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-bold rounded-xl text-sm w-full transition-colors"
             whileTap={{ scale: 0.95 }}
           >
